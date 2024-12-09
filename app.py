@@ -32,7 +32,7 @@ def index():
 def list_medias():
     medias = db.execute(
     '''
-    SELECT m.ID, t.Name as TypeName, m.Title, m.Date_Added, m.Release_year, m.Rating, m.Duration, m.Description 
+    SELECT m.ID, t.Name as TypeName, m.Title, DATE(m.Date_Added) AS Date_Added, m.Release_year, m.Rating, m.Duration, m.Description 
     FROM MEDIA m JOIN TYPE t ON m.TypeID = t.ID
     ORDER BY m.ID
     ''').fetchall()
@@ -42,7 +42,7 @@ def list_medias():
 def get_media(id):
   media = db.execute(
     '''
-    SELECT m.ID, t.Name, m.Title, m.Date_Added, m.Release_year, m.Rating, m.Duration, m.Description 
+    SELECT m.ID, t.Name, m.Title, DATE(m.Date_Added) AS Date_Added, m.Release_year, m.Rating, m.Duration, m.Description 
     FROM MEDIA m JOIN TYPE t ON m.TypeID = t.ID
     WHERE m.ID = ?
     ''', [id]).fetchone()
@@ -98,10 +98,11 @@ def search_media(expr):
   expr = '%' + expr + '%'
   medias = db.execute(
     ''' 
-    SELECT ID, Title
-    FROM MEDIA
-    WHERE Title LIKE ?
+    SELECT m.ID, t.Name, m.Title, m.Date_Added, m.Release_year, m.Rating, m.Duration, m.Description 
+    FROM MEDIA m JOIN TYPE t ON m.TypeID = t.ID
+    WHERE m.Title LIKE ?
     ''', [expr]).fetchall()
+  
   return render_template('media-search.html',
            search=search,medias=medias)
 
@@ -126,8 +127,8 @@ def view_movies_by_cast(id):
     WHERE p.ID = ?
     ''', [id]).fetchone()
 
-  if cast is None:
-     abort(404, 'ID {} do ator não existe.'.format(id))
+  if cast is None or id < 636 or id > 4389:
+     abort(404, 'ID {} nao existe Para Atores, valores entre 636 e 4389.'.format(id))
 
   medias = db.execute(
     '''
@@ -159,7 +160,7 @@ def search_cast(expr):
 def list_directors():
     directors = db.execute(
     '''
-    SELECT p.ID, p.Name 
+    SELECT m.Title, p.ID, p.Name, m.ID AS mediaID
     FROM PERSON p JOIN DIRECTOR d ON p.ID = d.PersonID JOIN MEDIA m ON d.MediaID = m.ID
     ORDER BY p.Name
     ''').fetchall()
@@ -168,17 +169,17 @@ def list_directors():
 
 @APP.route('/director/<int:id>/')
 def view_medias_by_director(id):
-  directors = db.execute(
+    director = db.execute(
     '''
     SELECT p.ID, p.Name 
     FROM PERSON p JOIN DIRECTOR d ON p.ID = d.PersonID JOIN MEDIA m ON d.MediaID = m.ID
     WHERE p.ID = ?
     ''', [id]).fetchone()
 
-  if directors is None:
-     abort(404, 'ID {} do diretor não existe.'.format(id))
+    if director is None or id < 1 or id > 635:
+        abort(404, 'ID {} nao existe Para Diretores, valores entre 1 e 635.'.format(id))
 
-  medias = db.execute(
+    medias = db.execute(
     '''
     SELECT m.ID, m.Title
     FROM PERSON p JOIN DIRECTOR d ON p.ID = d.PersonID JOIN MEDIA m ON d.MediaID = m.ID
@@ -186,22 +187,23 @@ def view_medias_by_director(id):
     ORDER BY m.Title
     ''', [id]).fetchall()
 
-  return render_template('director.html', 
-           directors=directors, medias=medias)
+    return render_template('director.html', 
+           director=director, medias=medias)
  
 @APP.route('/director/search/<expr>/')
 def search_director(expr):
-  search = { 'expr': expr }
-  expr = '%' + expr + '%'
-  directors = db.execute(
+    search = { 'expr': expr }
+    expr = '%' + expr + '%'
+    directors = db.execute(
     ''' 
     SELECT p.ID, p.Name, m.ID, m.Title 
     FROM PERSON p JOIN DIRECTOR d ON p.ID = d.PersonID JOIN MEDIA m ON d.MediaID = m.ID
     WHERE p.Name LIKE ?
     ''', [expr]).fetchall()
 
-  return render_template('director-search.html', 
-           search=search,directors=directors)
+    return render_template('director-search.html', 
+           search=search, directors=directors)
+
 
 # Genero
 @APP.route('/genres/')
@@ -227,7 +229,7 @@ def view_medias_by_genre(id):
 
   medias = db.execute(
     '''
-    SELECT m.ID, m.Title
+    SELECT m.ID as MediaID, m.Title
     FROM GENRE g JOIN MEDIAGENRE mg ON g.ID = mg.GenreID JOIN MEDIA m ON mg.MediaID = m.ID
     WHERE g.ID = ?
     ORDER BY m.Title
@@ -238,12 +240,10 @@ def view_medias_by_genre(id):
 
 @APP.route('/genres/search/')
 def search_genre():
-    # Pega o valor do parâmetro 'expr' da query string
-    expr = request.args.get('expr', '')  # Valor padrão é uma string vazia
+    expr = request.args.get('expr', '')
     search = {'expr': expr}
     expr = f"%{expr}%"
 
-    # Executa a consulta no banco de dados
     genres = db.execute(
         '''
         SELECT ID, Name
@@ -252,7 +252,6 @@ def search_genre():
         ''', [expr]
     ).fetchall()
 
-    # Renderiza o template com os resultados
     return render_template('genre-search.html', search=search, genres=genres)
 
 # Pais de origem
@@ -288,35 +287,17 @@ def view_medias_by_country(id):
   return render_template('country.html', 
            medias=medias, country=country)
 
-
-
-# @APP.route('/countries/search/<expr>/')
-# def search_country(expr):
-#   search = { 'expr': expr }
-#   expr = '%' + expr + '%'
-#   countries = db.execute(
-#     ''' 
-#     SELECT ID, Name
-#     FROM COUNTRY
-#     WHERE Name LIKE ?
-#     ''', [expr]).fetchall()
-#   return render_template('country-search.html',
-#            search=search,countries=countries)
-
-@APP.route('/countries/search/', methods=['GET'])
+@APP.route('/countries/search/')
 def search_country():
-    expr = request.args.get('expr')  # Pega o valor do parâmetro 'expr' da query string
-    
-    # Adiciona os '%' apenas na busca SQL
+    expr = request.args.get('expr')    
     search_expr = '%' + expr + '%'
     countries = db.execute(
-        ''' 
-        SELECT ID, Name
-        FROM COUNTRY
-        WHERE Name LIKE ?
-        ''', [search_expr]).fetchall()
+    ''' 
+    SELECT ID, Name
+    FROM COUNTRY
+    WHERE Name LIKE ?
+    ''', [search_expr]).fetchall()
 
-    # Passa o valor de 'expr' sem os '%'
     return render_template('country-search.html',
         search={'expr': expr},
         countries=countries)
@@ -324,12 +305,12 @@ def search_country():
 # Tipo
 @APP.route('/types/')
 def list_types():
-    type = db.execute('''
+    types = db.execute('''
       SELECT t.ID, t.Name
       FROM TYPE t
       ORDER BY t.ID
     ''').fetchall()
-    return render_template('type-list.html', type=type)
+    return render_template('type-list.html', types=types)
 
 @APP.route('/types/<int:id>/')
 def view_medias_by_types(id):
@@ -354,16 +335,3 @@ def view_medias_by_types(id):
   return render_template('type.html', 
            type=type, medias=medias)
 
-@APP.route('/types/search/<expr>/')
-def search_type(expr):
-  search = { 'expr': expr }
-  expr = '%' + expr + '%'
-  type = db.execute(
-    ''' 
-    SELECT m.ID, m.Title, t.Name 
-    FROM TYPE t JOIN MEDIA m ON m.TypeID = t.ID
-    WHERE t.Name LIKE ?
-    ''', [expr]).fetchall()
-
-  return render_template('type-search.html', 
-           search=search,type=type)

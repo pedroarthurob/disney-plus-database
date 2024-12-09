@@ -4,7 +4,7 @@
 <h1>Medias</h1>
 <table>
   <tr>
-    <th><b>Id</b></th>
+    <th><b>ID</b></th>
     <th><b>Tipo</b></th>
     <th><b>Título</b></th>
     <th><b>Data de disponibilidade na TV</b></th>
@@ -17,8 +17,8 @@
   {% for m in medias %}
   <tr>
     <td>{{ m.ID }}</td>
-    <td><a href="/type/{{ m.ID }}">{{ m.TypeName }}</a></td>
-    <td>{{ m.Title }}</td>
+    <td>{{ m.TypeName }}</td>
+    <td><a href="/medias/{{ m.ID }}">{{ m.Title }}</a></td>
     <td>{{ m.Date_Added }}</td>
     <td>{{ m.Release_year }}</td>
     <td>{{ m.Rating }}</td>

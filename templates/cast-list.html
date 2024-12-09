@@ -4,15 +4,15 @@
 <h1>Elenco</h1>
 <table>
   <tr>
-    <th><b>PersonID</b></th>
+    <th><b>ID do Ator</b></th>
     <th><b>Elenco</b></th>
-    <th><b>MediaTitle</b></th>
+    <th><b>Título da Media</b></th>
   </tr>
   {% for cast in casts %}
   <tr>
     <td><a href="/cast/{{ cast.ID }}">{{ cast.ID }}</a></td>
     <td><a href="/cast/{{ cast.ID }}">{{ cast.Name }}</a></td>    
-    <td><a href="/medias/{{ cast.mediaID }}">{{cast.Title }}</a></td>
+    <td><a href="/medias/{{ cast.mediaID }}">{{ cast.Title }}</a></td>
   </tr>
   {% endfor %}
 </table>

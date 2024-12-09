@@ -5,7 +5,7 @@
 <p><b>Pesquisa por</b>: "{{ search.expr }}"</p>
   <p><ul>
     {% for m in medias %}      
-      <li><a href="/medias/{{ m.MediaID }}">{{ m.Title }}</a></li>
+      <li><a href="/medias/{{ m.ID }}">{{m.Title }}</a></li>
     {% endfor %}
     </ul>
   </p>

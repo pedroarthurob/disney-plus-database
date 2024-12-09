@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Disney Plus database</h1>
+<h1>Disney Plus Database</h1>
 
 <h2>Sobre</h2>
 <p>Esta aplicação demonstra o uso do catálogo de filmes e séries da Disney Plus.
-  Essa aplicação foi desenvolvida usando:
+  <br>Essa aplicação foi desenvolvida usando:
   <a href="https://docs.python.org/3/library/sqlite3.html">sqlite3</a>,
   <a href="https://flask.palletsprojects.com">Flask</a>, and
   <a href="https://jinja.palletsprojects.com">Jinja</a>.
@@ -51,8 +51,9 @@
 <p>Mais informações:
   <form name="mid"
     action="javascript:window.open('/medias/'+document.forms['mid'].elements['id'].value,'_self')">
-    Media Id:<input placeholder="123" name="id" type="number" min="1" /><input
-      type="submit" value="get" />
+    ID da Media:
+    <input placeholder="123" name="id" type="number" min="1" />
+    <input type="submit" value="get" />
   </form>
 </p>
 
@@ -63,7 +64,7 @@
     <input type="submit" value="search" />
   </form>
 </p>
-
+<br>
 <h3>Elenco</h3>
 <p>
   <a href="/cast">Listar todos</a>
@@ -71,8 +72,9 @@
 <p>Mais informações:
   <form name="aid"
     action="javascript:window.open('/cast/'+document.forms['aid'].elements['id'].value,'_self')">
-    Ator Id:<input placeholder="123" name="id" type="number" min="1" /><input
-      type="submit" value="get" />
+    ID do Ator:
+    <input placeholder="entre 636 a 4389" name="id" type="number" min="1" />
+    <input type="submit" value="get" />
   </form>
 </p>
 
@@ -83,27 +85,28 @@
     <input type="submit" value="search" />
   </form>
 </p>
-
+<br>
 <h3>Diretor</h3>
 <p>
   <a href="/director">Listar todos</a>
 </p>
 <p>Mais informações:
-  <form name="aid"
-    action="javascript:window.open('/director/'+document.forms['aid'].elements['id'].value,'_self')">
-    Diretor Id:<input placeholder="123" name="id" type="number" min="1" /><input
-      type="submit" value="get" />
+  <form name="did"
+    action="javascript:window.open('/director/'+document.forms['did'].elements['id'].value,'_self')">
+    ID do Diretor:
+    <input placeholder="entre 1 a 635" name="id" type="number" min="1" />
+    <input type="submit" value="get" />
   </form>
 </p>
 
 <p>Buscar pelo nome:
-  <form name="asearch"
-    action="javascript:window.open('/director/search/'+document.forms['asearch'].elements['expr'].value,'_self')">
+  <form name="dsearch"
+    action="javascript:window.open('/director/search/'+document.forms['dsearch'].elements['expr'].value,'_self')">
     <input name="expr" id="expr" placeholder="Liz" required />
     <input type="submit" value="search" />
   </form>
 </p>
-
+<br>
 <h3>Gêneros</h3>
 <p>
   <a href="/genres">Listar tudo</a>
@@ -111,8 +114,9 @@
 <p>Mais informações:
   <form name="gid"
     action="javascript:window.open('/genres/'+document.forms['gid'].elements['id'].value,'_self')">
-    Gênero Id:<input placeholder="123" name="id" type="number" min="1" /><input
-      type="submit" value="get" />
+    ID do Gênero:
+    <input placeholder="23" name="id" type="number" min="1" />
+    <input type="submit" value="get" />
   </form>
 </p>
 
@@ -122,44 +126,30 @@
     <input type="submit" value="search" />
   </form>  
 </p>
-
-<h3>País de origem</h3>
+<br>
+<h3>País de Origem</h3>
 <p>
   <a href="/countries">Listar todos</a>
 </p>
 <p>Mais informações:
   <form name="cid"
     action="javascript:window.open('/countries/'+document.forms['cid'].elements['id'].value,'_self')">
-    País de Origem Id:
-    <input placeholder="123" name="id" type="number"
+    ID do País de Origem:
+    <input placeholder="40" name="id" type="number"
       min="1" /><input type="submit" value="get" />
   </form>
 </p>
 
 <p>Buscar pelo país:
   <form name="csearch" action="/countries/search/" method="get">
-    <input name="expr" id="expr" placeholder="USA" required/>
+    <input name="expr" id="expr" placeholder="United States" required/>
     <input type="submit" value="search" />
   </form>
 </p>
-
-<h3>Tipo de media</h3>
+<br>
+<h3>Tipo de Media</h3>
 <p>
   <a href="/types">Listar todos</a>
-</p>
-<p>Mais informações:
-  <form name="gid"
-    action="javascript:window.open('/types/'+document.forms['gid'].elements['id'].value,'_self')">
-    Tipo de Media Id:<input placeholder="123" name="id" type="number"
-      min="1" /><input type="submit" value="get" />
-  </form>
-</p>
-<p>Buscar pelo tipo (Movie/TV Show):
-  <form name="asearch"
-    action="javascript:window.open('/types/search/'+document.forms['asearch'].elements['expr'].value,'_self')">
-    <input name="expr" id="expr" placeholder="TV Show" required />
-    <input type="submit" value="search" />
-  </form>
 </p>
 
 {% endblock %}

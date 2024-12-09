@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1>Classificação de Gênero</h1>
 <table> 
     <tr>
-      <th><b>Id</b></th>
-      <th><b>Nome</b></th>
+      <th><b>ID</b></th>
+      <th><b>Classificação</b></th>
     </tr>
      
     {% for g in genre %}
     <tr>
-        <td><a href="/genres/{{ g.ID }}">{{ g.ID }}</a></td>
-        <td>{{ g.Name }}</td>
+        <td>{{ g.ID }}</td>
+        <td><a href="/genres/{{ g.ID }}">{{ g.Name }}</a></td></td>
     </tr>
     {% endfor %} 
     </table>

@@ -5,8 +5,8 @@
 <p><b>Pesquisa por:</b> "{{ search.expr }}"</p>
 <p>
   <ul>
-    {% for genre in genres %}
-    <li><a href="/genres/{{ genre.ID }}">{{ genre.Name }}</a></li>
+    {% for g in genres %}
+    <li><a href="/genres/{{ g.ID }}">{{ g.Name }}</a></li>
     {% endfor %}
   </ul>
 </p>

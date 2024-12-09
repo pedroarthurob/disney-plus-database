@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{cast.Name}}</h1>
-<p><b>PersonId: </b>{{ cast.ID }}</p>
-<p><b>Name: </b>{{ cast.Name }}</p>
+<h1>{{ cast.Name }}</h1>
+<p><b>ID do Ator: </b>{{ cast.ID }}</p>
 <p>
-  <b>Movies: </b>
+  <b>Medias: </b>
 <ul>
   {% for m in medias %}
   <li>
-    <a href="/movies/{{ m.MovieId }}">{{ m.Title }}</a>
+    <a href="/medias/{{ m.ID }}">{{ m.Title }}</a>
   </li>
   {% endfor %}
 </ul>

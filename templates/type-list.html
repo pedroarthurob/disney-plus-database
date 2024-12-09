@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1>Tipo de Media</h1>
 <table> 
     <tr>
-      <th><b>Id</b></th>
-      <th><b>Nome</b></th>
+      <th><b>ID</b></th>
+      <th><b>Tipo de Media</b></th>
     </tr>
      
-    {% for t in type %}
+    {% for t in types %}
     <tr>
-        <td><a href="/type/{{ t.ID }}">{{ t.ID }}</a></td>
-        <td>{{ t.Name }}</td>
+        <td>{{ t.ID }}</td>
+        <td><a href="/types/{{ t.ID }}">{{ t.Name }}</a></td>
     </tr>
     {% endfor %} 
     </table>

@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}{{ media.Title }} {% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
+<h1>{{ media.Title }}</h1>
   <h2>Media info</h2>
   <p><b>ID: </b>{{ media.ID }}</p>
   <p><b>Title: </b>{{ media.Title }}</p>
@@ -18,7 +15,7 @@
   <ul>
     {% for g in genres %}
     <li>
-      <a href="/genres/{{ g.GenreID }}">{{ g.Name }}</a>
+      <a href="/genres/{{ g.ID }}">{{ g.Name }}</a>
     </li>
     {% endfor %}
   </ul></p>
@@ -42,7 +39,7 @@
   <ul>
     {% for country in countries %}
     <li>
-      <a href="/country/{{ country.ID }}">{{ country.Name }}</a>
+      <a href="/countries/{{ country.ID }}">{{ country.Name }}</a>
     </li>
     {% endfor %}
   </ul></p>
