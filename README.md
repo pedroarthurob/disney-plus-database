@@ -41,13 +41,14 @@ abrindo uma janela no seu browser  com o endereço [__http://localhost:9001/__](
 
 ```
 $ python3 server.py
-2021-11-27 15:07:33 - INFO - Connected to database movie_stream
- * Serving Flask app "app" (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
+2024-12-09 05:55:51 - INFO - Connected to database
+ * Serving Flask app 'app'
  * Debug mode: off
-2021-11-27 15:07:33 - INFO -  * Running on http://0.0.0.0:9001/ (Press CTRL+C to quit)
+2024-12-09 05:55:51 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:9001
+ * Running on http://172.26.28.115:9001
+2024-12-09 05:55:51 - INFO - Press CTRL+C to quit
 ...
 ```
 
