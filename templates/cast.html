@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{cast.Name}}</h1>
+<p><b>PersonId: </b>{{ cast.PersonID }}</p>
+<p><b>Name: </b>{{ cast.Name }}</p>
+<p>
+  <b>Movies: </b>
+<ul>
+  {% for m in movies %}
+  <li>
+    <a href="/movies/{{ m.MovieId }}">{{ m.Title }}</a>
+  </li>
+  {% endfor %}
+</ul>
+</p>
+{% endblock %}

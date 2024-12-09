@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Diretor</h1>
+<table>
+  <tr>
+    <th><b>MediaID</b></th>
+    <th><b>PersonID</b></th>
+  </tr>
+  {% for d in director %}
+  <tr>
+    <td><a href="/director/{{ d.MediaId }}">{{ d.MediaId }}</a></td>
+    <td><a href="/director/{{ d.PersonId }}">{{ d.PersonId }}</a></td>
+    <td>{{ d.Name }}</td>
+    
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

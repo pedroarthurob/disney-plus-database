@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Medias</h1>
+  <table> 
+  <tr>
+    <th><b>Id</b></th>
+    <th><b>Tipo</b></th>
+    <th><b>Título</b></th>
+    <th><b>Data de disponibilidade na TV</b></th>    
+    <th><b>Ano de lançamento</b></th>
+    <th><b>Classificação</b></th>
+    <th><b>Duração</b></th>
+    <th><b>Descrição</b></th>
+   </tr>
+   
+  {% for m in medias %}
+    <tr>
+      <td>{{ m.ID }}</td>
+      <td><a href="/type/{{ m.ID }}">{{ m.TypeName }}</a></td>
+      <td>{{ m.Title }}</td>
+      <td>{{ m.Date_Added }}</td>
+      <td>{{ m.Release_year }}</td>
+      <td>{{ m.Rating }}</td>
+      <td>{{ m.Duration }}</td>
+      <td>{{ m.Description }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}

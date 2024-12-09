@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Resultado da pesquisa</h1>
+<p><b>Pesquisa por</b>: "{{ search.expr }}"</p>
+  <p><ul>
+    {% for c in cast %}      
+      <li><a href="/cast/{{ c.PersonID }}">{{ Person.Name }}</a></li>
+    {% endfor %}
+    </ul>
+  </p>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ type.Name }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h2>Tipos info</h2>
+  <p><b>TipoID: </b>{{ type.TypeID }}</p>
+  <p><b>Nome: </b>{{ type.Name }}</p>
+  <p>
+    <b>Medias do tipo Filme: </b>
+    <ul>
+      {% for m in media %}
+      <li>
+        <a href="/media/{{ m.MediaID }}">{{ m.Title }}</a>
+      </li>
+    <b>Medias do tipo TV Show: </b>
+      <ul>
+        {% for m in media %}
+        <li>
+          <a href="/media/{{ m.MediaID }}">{{ m.Title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </p>
+  
+{% endblock %}

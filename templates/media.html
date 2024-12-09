@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ media.Title }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h2>Media info</h2>
+  <p><b>ID: </b>{{ media.ID }}</p>
+  <p><b>Title: </b>{{ media.Title }}</p>
+  <p><b>Type: </b>
+    <ul>
+      {% for t in type %}
+      <li>
+        <a href="/type/{{ t.ID }}">{{ t.Name }}</a>
+      </li>
+      {% endfor %}
+    </ul></p>
+  <p><b>Date Added: </b>{{ media.Date_Added }}</p>
+  <p><b>Release year: </b>{{ media.Release_year }}</p>
+  <p><b>Rating: </b>{{ media.Rating }}</p>
+  <p><b>Duration: </b>{{ media.Duration }}</p>
+  <p><b>Description: </b>{{ media.Description }}</p>
+  <p><b>Genres: </b>
+  <ul>
+    {% for g in genres %}
+    <li>
+      <a href="/genres/{{ g.GenreID }}">{{ g.Name }}</a>
+    </li>
+    {% endfor %}
+  </ul></p>
+  <p><b>Actors: </b>
+  <ul>
+    {% for c in cast %}
+    <li>
+      <a href="/cast/{{ c.PersonID }}">{{ Person.Name }}</a>
+    </li>
+    {% endfor %}
+  </ul></p>
+  <p><b>Directors: </b>
+  <ul>
+    {% for d in director %}
+    <li>
+      <a href="/director/{{ d.PersonID }}">{{ Person.Name }}</a>
+    </li>
+    {% endfor %}
+  </ul></p>
+  <p><b>Country: </b>
+  <ul>
+    {% for y in country %}
+    <li>
+      <a href="/country/{{ y.CountryID }}">{{ y.Name }}</a>
+    </li>
+    {% endfor %}
+  </ul></p>
+  
+{% endblock %}

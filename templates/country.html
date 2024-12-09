@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ country.Name }}</h1>
+<p>
+  <b>CountryId: </b>{{ country.CountryID }}
+</p>
+<p>
+  <b>Nome: </b>{{ coutry.Name }}
+</p>
+<p>
+  <b>Medias: </b>
+<ul>
+  {% for m in medias %}
+  <li>
+    <a href="/medias/{{ m.MediaID }}">{{ m.Title }}</a>
+  </li>
+  {% endfor %}
+</ul>
+</p>
+{% endblock %}
