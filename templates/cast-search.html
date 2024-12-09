@@ -4,8 +4,8 @@
 <h1>Resultado da pesquisa</h1>
 <p><b>Pesquisa por</b>: "{{ search.expr }}"</p>
   <p><ul>
-    {% for c in cast %}      
-      <li><a href="/cast/{{ c.PersonID }}">{{ Person.Name }}</a></li>
+    {% for cast in casts %}      
+      <li><a href="/cast/{{cast.ID }}">{{cast.Name }}</a></li>
     {% endfor %}
     </ul>
   </p>

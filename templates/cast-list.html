@@ -4,17 +4,15 @@
 <h1>Elenco</h1>
 <table>
   <tr>
-    <th><b>MediaTitle</b></th>
     <th><b>PersonID</b></th>
     <th><b>Elenco</b></th>
+    <th><b>MediaTitle</b></th>
   </tr>
-  {% for c in cast %}
+  {% for cast in casts %}
   <tr>
-    <td><a href="/cast/{{ Media.MediaId }}">{{ Media.Title }}</a></td>
-    <td><a href="/cast/{{ c.PersonId }}">{{ c.PersonId }}</a></td>
-    <td><a href="/cast/{{ Person.Name }}">{{ Person.Name }}</a></td>
-    <td>{{ c.Name }}</td>
-    
+    <td><a href="/cast/{{ cast.ID }}">{{ cast.ID }}</a></td>
+    <td><a href="/cast/{{ cast.ID }}">{{ cast.Name }}</a></td>    
+    <td><a href="/medias/{{ cast.mediaID }}">{{cast.Title }}</a></td>
   </tr>
   {% endfor %}
 </table>

@@ -2,12 +2,12 @@
 
 {% block content %}
 <h1>{{cast.Name}}</h1>
-<p><b>PersonId: </b>{{ cast.PersonID }}</p>
+<p><b>PersonId: </b>{{ cast.ID }}</p>
 <p><b>Name: </b>{{ cast.Name }}</p>
 <p>
   <b>Movies: </b>
 <ul>
-  {% for m in movies %}
+  {% for m in medias %}
   <li>
     <a href="/movies/{{ m.MovieId }}">{{ m.Title }}</a>
   </li>

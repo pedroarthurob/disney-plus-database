@@ -2,17 +2,17 @@
 {% block content %}
 <h1>{{ country.Name }}</h1>
 <p>
-  <b>CountryId: </b>{{ country.CountryID }}
+  <b>CountryId: </b>{{ country.ID }}
 </p>
 <p>
-  <b>Nome: </b>{{ coutry.Name }}
+  <b>Nome: </b>{{ country.Name }}
 </p>
 <p>
   <b>Medias: </b>
 <ul>
   {% for m in medias %}
   <li>
-    <a href="/medias/{{ m.MediaID }}">{{ m.Title }}</a>
+    <a href="/medias/{{ m.ID }}">{{ m.Title }}</a>
   </li>
   {% endfor %}
 </ul>

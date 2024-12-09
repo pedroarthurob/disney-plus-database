@@ -8,14 +8,7 @@
   <h2>Media info</h2>
   <p><b>ID: </b>{{ media.ID }}</p>
   <p><b>Title: </b>{{ media.Title }}</p>
-  <p><b>Type: </b>
-    <ul>
-      {% for t in type %}
-      <li>
-        <a href="/type/{{ t.ID }}">{{ t.Name }}</a>
-      </li>
-      {% endfor %}
-    </ul></p>
+  <p><b>Type: </b>{{ media.Name }}</p>
   <p><b>Date Added: </b>{{ media.Date_Added }}</p>
   <p><b>Release year: </b>{{ media.Release_year }}</p>
   <p><b>Rating: </b>{{ media.Rating }}</p>
@@ -31,25 +24,25 @@
   </ul></p>
   <p><b>Actors: </b>
   <ul>
-    {% for c in cast %}
+    {% for cast in casts %}
     <li>
-      <a href="/cast/{{ c.PersonID }}">{{ Person.Name }}</a>
+      <a href="/cast/{{ cast.ID }}">{{ cast.Name }}</a>
     </li>
     {% endfor %}
   </ul></p>
   <p><b>Directors: </b>
   <ul>
-    {% for d in director %}
+    {% for director in directors %}
     <li>
-      <a href="/director/{{ d.PersonID }}">{{ Person.Name }}</a>
+      <a href="/director/{{ director.ID }}">{{ director.Name }}</a>
     </li>
     {% endfor %}
   </ul></p>
   <p><b>Country: </b>
   <ul>
-    {% for y in country %}
+    {% for country in countries %}
     <li>
-      <a href="/country/{{ y.CountryID }}">{{ y.Name }}</a>
+      <a href="/country/{{ country.ID }}">{{ country.Name }}</a>
     </li>
     {% endfor %}
   </ul></p>

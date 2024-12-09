@@ -2,17 +2,17 @@
 
 {% block content %}
 <h1>País de origem</h1>
-<table> 
-    <tr>
-      <th><b>Id</b></th>
-      <th><b>Nome</b></th>
-    </tr>
-     
-    {% for c in country %}
-    <tr>
-        <td><a href="/country/{{ c.ID }}">{{ c.ID }}</a></td>
-        <td>{{ c.Name }}</td>
-    </tr>
-    {% endfor %} 
-    </table>
+<table>
+  <tr>
+    <th><b>Id</b></th>
+    <th><b>Nome</b></th>
+  </tr>
+
+  {% for c in country %}
+  <tr>
+    <td><a href="/countries/{{ c.ID }}">{{ c.ID }}</a></td>
+    <td>{{ c.Name }}</td>
+  </tr>
+  {% endfor %}
+</table>
 {% endblock %}

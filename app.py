@@ -1,6 +1,6 @@
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning)
-from flask import abort, render_template, Flask
+from flask import abort, redirect, render_template, Flask, request, url_for
 import logging
 import db
 
@@ -87,7 +87,7 @@ def get_media(id):
     FROM PERSON p JOIN DIRECTOR d ON p.ID = d.PersonID JOIN MEDIA m ON d.MediaID = m.ID
     WHERE m.ID = ?
     ORDER BY p.Name
-    ''', [id]).fetchall();
+    ''', [id]).fetchall()
   
   return render_template('media.html', 
            media=media, types=types, genres=genres, countries=countries, casts=casts, directors=directors)
@@ -110,7 +110,7 @@ def search_media(expr):
 def list_cast():
     casts = db.execute(
     '''
-    SELECT m.Title, p.ID, p.Name 
+    SELECT m.Title, p.ID, p.Name, m.ID AS mediaID
     FROM PERSON p JOIN CAST c ON p.ID = c.PersonID JOIN MEDIA m ON c.MediaID = m.ID
     ORDER BY p.Name
     ''').fetchall()
@@ -119,14 +119,14 @@ def list_cast():
 
 @APP.route('/cast/<int:id>/')
 def view_movies_by_cast(id):
-  casts = db.execute(
+  cast = db.execute(
     '''
     SELECT p.ID, p.Name 
     FROM PERSON p JOIN CAST c ON p.ID = c.PersonID JOIN MEDIA m ON c.MediaID = m.ID
     WHERE p.ID = ?
     ''', [id]).fetchone()
 
-  if casts is None:
+  if cast is None:
      abort(404, 'ID {} do ator não existe.'.format(id))
 
   medias = db.execute(
@@ -138,7 +138,7 @@ def view_movies_by_cast(id):
     ''', [id]).fetchall()
 
   return render_template('cast.html', 
-           casts=casts, medias=medias)
+           cast=cast, medias=medias)
  
 @APP.route('/cast/search/<expr>/')
 def search_cast(expr):
@@ -236,19 +236,24 @@ def view_medias_by_genre(id):
   return render_template('genre.html', 
            genre=genre, medias=medias)
 
-@APP.route('/genres/search/<expr>/')
-def search_genre(expr):
-  search = { 'expr': expr }
-  expr = '%' + expr + '%'
-  genre = db.execute(
-    ''' 
-    SELECT m.ID, m.Title, g.Name 
-    FROM GENRE g JOIN MEDIAGENRE mg ON g.ID = mg.GenreID JOIN MEDIA m ON mg.MediaID = m.ID
-    WHERE g.Name LIKE ?
-    ''', [expr]).fetchall()
+@APP.route('/genres/search/')
+def search_genre():
+    # Pega o valor do parâmetro 'expr' da query string
+    expr = request.args.get('expr', '')  # Valor padrão é uma string vazia
+    search = {'expr': expr}
+    expr = f"%{expr}%"
 
-  return render_template('genre-search.html', 
-           search=search,genre=genre)
+    # Executa a consulta no banco de dados
+    genres = db.execute(
+        '''
+        SELECT ID, Name
+        FROM GENRE
+        WHERE Name LIKE ?
+        ''', [expr]
+    ).fetchall()
+
+    # Renderiza o template com os resultados
+    return render_template('genre-search.html', search=search, genres=genres)
 
 # Pais de origem
 @APP.route('/countries/')
@@ -282,6 +287,39 @@ def view_medias_by_country(id):
 
   return render_template('country.html', 
            medias=medias, country=country)
+
+
+
+# @APP.route('/countries/search/<expr>/')
+# def search_country(expr):
+#   search = { 'expr': expr }
+#   expr = '%' + expr + '%'
+#   countries = db.execute(
+#     ''' 
+#     SELECT ID, Name
+#     FROM COUNTRY
+#     WHERE Name LIKE ?
+#     ''', [expr]).fetchall()
+#   return render_template('country-search.html',
+#            search=search,countries=countries)
+
+@APP.route('/countries/search/', methods=['GET'])
+def search_country():
+    expr = request.args.get('expr')  # Pega o valor do parâmetro 'expr' da query string
+    
+    # Adiciona os '%' apenas na busca SQL
+    search_expr = '%' + expr + '%'
+    countries = db.execute(
+        ''' 
+        SELECT ID, Name
+        FROM COUNTRY
+        WHERE Name LIKE ?
+        ''', [search_expr]).fetchall()
+
+    # Passa o valor de 'expr' sem os '%'
+    return render_template('country-search.html',
+        search={'expr': expr},
+        countries=countries)
 
 # Tipo
 @APP.route('/types/')
